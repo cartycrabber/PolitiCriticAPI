@@ -6,6 +6,5 @@ public enum Subreddits
     conservative,
     politics,
     liberal,
-    republican;
-
+    republican
 };

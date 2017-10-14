@@ -158,7 +158,9 @@
     <Compile Include="Models\RedditListing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\FacebookAPI.cs" />
+    <Compile Include="Services\RedditAnalyzer.cs" />
     <Compile Include="Services\RedditAPI.cs" />
+    <Compile Include="Services\Subreddits.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

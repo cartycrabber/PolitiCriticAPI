@@ -1,27 +1,39 @@
-﻿using System;
+﻿using PoliticalDeterminer.Models;
+using System;
+using System.Collections;
 
 public static class RedditAnalyzer
 {
-    public static void analyzeTags(RedditComment[] comments)
+    public static string[] AnalyzerOfMagicAndPower(RedditComment[] comments)
     {
         ArrayList subs = new ArrayList();
-        for (int i = 0; i < comments.length; i++)
+        for (int i = 0; i < comments.Length; i++)
         {
-            if (!subs.contains(comments[i].subreddit))
+            if (!subs.Contains(comments[i].Subreddit))
             {
-                subs.add(comments[i].subreddit);
+                subs.Add(comments[i].Subreddit);
             }
         }
         ArrayList numHitsPerSub = new ArrayList();
-        for (int i = 0; i < subs.size(); i++)
+        int[] subPings = new int[subs.Count];
+        int j = 0;
+        while (numHitsPerSub.Count > 0)
         {
-            //check if numHitsPerSub has subs[i] already
-            //if it already has it, increments end number by 1
-            //if not, adds "subs[i] + 1" to numHitsPerSub
-            if (numHitsPerSub.contains(subs[i]))
+            string sub = (string) numHitsPerSub[0];
+            int counter = 0;
+            while (numHitsPerSub.IndexOf(sub) > -1)
             {
-
+                numHitsPerSub.Remove(numHitsPerSub.IndexOf(sub));
+                counter++;
             }
+            subPings[j] = counter;
+            j++;
         }
+        string[] sortedSubs = new string[subs.Count];
+        for (int i = 0; i < sortedSubs.Length; i++)
+        {
+
+        }
+        return new string[3];
     }
 }
