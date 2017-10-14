@@ -61,15 +61,10 @@ namespace PoliticalDeterminer.Models
 
     public partial class FacebookPage
     {
-        public static FacebookPage FromJson(string json) => JsonConvert.DeserializeObject<FacebookPage>(json, Converter.Settings);
+        public static FacebookPage FromJson(string json) => JsonConvert.DeserializeObject<FacebookPage>(json, FacebookPageConverter.Settings);
     }
 
-    public static class Serialize
-    {
-        public static string ToJson(this FacebookPage self) => JsonConvert.SerializeObject(self, Converter.Settings);
-    }
-
-    public class Converter
+    public class FacebookPageConverter
     {
         public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
         {
