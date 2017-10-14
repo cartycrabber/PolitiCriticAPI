@@ -15,13 +15,71 @@ public static class RedditAnalyzer
 
     public static float SubredditKarmaAnalyzer(RedditComment[] comments)
     {
-        return -1;
+        ArrayList subs = new ArrayList();
+        ArrayList deltaSubs = new ArrayList();
+        for (int i = 0; i < comments.Length; i++)
+        {
+            subs.Add(comments[i].Subreddit);
+            subs.Add(comments[i].Score);
+            if (!deltaSubs.Contains(comments[i].Subreddit))
+            {
+                deltaSubs.Add(comments[i].Subreddit);
+            }
+        }
+        ArrayList subs2 = new ArrayList();
+        for (int i = 0; i < subs.Count; i++)
+        {
+            subs2[i] = subs[i];
+        }
+        ArrayList subPopularityInOrder = new ArrayList();
+        ArrayList subScoreInOrder = new ArrayList();
+        for (int i = 0; i < subs.length; i++)
+        {
+            subScoreInOrder[i] = int.MinValue;
+        }
+        //First need list of subs in order of score, then need scores themselves
+        while (totalScorePerSub.Count < deltaSubs.Count)
+        {
+            string currentSub = subs2[0];
+            int score = 0;
+            for (int i = 0; i < subs.Count; i++)
+            {
+                if (subs[i].Equals(currentSub))
+                {
+                    score += (int) [i + 1];
+                    subs2.Remove(i);
+                    subs2.Remove(i);
+                }
+            }
+            int index = 0;
+            while (subScoreInOrder[index] > score)
+            {
+                index++;
+            }
+            subScoreInOrder.Insert(index, score);
+            subPopularityInOrder.Insert(index, currentSub);
+        }
+        int extremity = 0;
+        for (int i = 0; i < subScoreInOrder.Count; i++)
+        {
+            if (conservativeSubs.Contains(subPopularityInOrder[i]))
+            {
+                extremity += subScoreInOrder[i];
+            }
+            if (liberalSubs.Contains(subPopularityInOrder[i]))
+            {
+                extremity -= subScoreInOrder[i];
+            }
+        }
+        return extremity;
     }
 
     public static float SubredditActivityAnalyzer(RedditComment[] comments)
     {
         
         ArrayList subs = new ArrayList();
+
+        //Finding all subs found in comments, 1 instance of each sub
         for (int i = 0; i < comments.Length; i++)
         {
             if (!subs.Contains(comments[i].Subreddit))
@@ -32,10 +90,12 @@ public static class RedditAnalyzer
         ArrayList numHitsPerSub = new ArrayList();
         int[] subPings = new int[subs.Count];
         int j = 0;
+        //Finds all subs found in comments, creates copies of the same sub
         for (int i = 0; i < subs.Count; i++)
         {
             numHitsPerSub.Add(comments[i].Subreddit);
         }
+        //counts number of times sub is found
         while (numHitsPerSub.Count > 0)
         {
             string sub = (string) numHitsPerSub[0];
@@ -56,6 +116,7 @@ public static class RedditAnalyzer
         string[] sortedSubs = new string[subs.Count];
         j = 0;
         int a = 0;
+        //Finds most popular subreddit, adds that one first to end string[]
         while (sortedSubs.Contains(""))
         {
             int maxValue = subPings.Max();
@@ -66,16 +127,29 @@ public static class RedditAnalyzer
             a++;
         }
         float extremity = 0;
-        for (int i = 0; i < sortedSubs.Length; i++)
+        int prevNumber = 0;
+        int delta = 0;
+        //Loops through the sub pings and sets the extremity based off of the sub pings and the popularity of each sub
+        for (int i = 0; i < sortedSubs.Length; i++) //MIGHT HAVE TO CHANGE "i < sortedSubs.Length" TO "subPings2.Count > 0"
         {
+            //If multiple subreddits have the same number of pings, they affect the extremity value the same amount
+            if (prevNumber == subPings2[0])
+            {
+                delta++;
+            } else
+            {
+                delta = 0;
+            }
+            prevNumber = subPings2[0];
             if (conservativeSubs.Contains(sortedSubs[i]))
             {
-                extremity += subPings2[i] / (i + 1);
+                extremity += subPings2[0] / (i + 1 - delta);
             }
             if (liberalSubs.Contains(sortedSubs[i]))
             {
-                extremity -= subPings2[i] / (i + 1);
+                extremity -= subPings2[0] / (i + 1 - delta);
             }
+            subPings2.Remove(0);
         }
         return extremity;
     }
