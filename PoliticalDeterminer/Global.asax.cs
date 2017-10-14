@@ -24,13 +24,13 @@ namespace PoliticalDeterminer
             /*FacebookAPI fb = new FacebookAPI();
             FacebookPost[] posts = fb.GetPosts("DonaldTrump");*/
 
-            RedditAPI reddit = new RedditAPI();
+            /*RedditAPI reddit = new RedditAPI();
             RedditComment[] comments = reddit.GetComments("mredditer");
 
             foreach(RedditComment comment in comments)
             {
                 Debug.WriteLine(comment.Body);
-            }
+            }*/
         }
     }
 }
