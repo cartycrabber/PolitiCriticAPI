@@ -5,8 +5,22 @@ using System.Linq;
 
 public static class RedditAnalyzer
 {
-    public static string[] AnalyzerOfMagicAndPower(RedditComment[] comments)
+    private static string[] conservativeSubs = { "republican", "conservative", "the_donald", "conservatives", "monarchism", "new_right",
+    "objectivism", "paleoconservative", "republicans", "romney", "trueobjectivism" };
+
+    private static string[] liberalSubs = { "liberal", "alltheleft", "classical_liberals", "cornbreadliberals", "democrats", "demsocialist",
+    "greenparty", "labor", "leftcommunism", "leninism", "neoprogs", "obama", "progressive", "socialdemocracy", "socialism" };
+
+    private static string[] commentText;
+
+    public static float SubredditKarmaAnalyzer(RedditComment[] comments)
     {
+        return -1;
+    }
+
+    public static float SubredditActivityAnalyzer(RedditComment[] comments)
+    {
+        
         ArrayList subs = new ArrayList();
         for (int i = 0; i < comments.Length; i++)
         {
@@ -34,15 +48,40 @@ public static class RedditAnalyzer
             subPings[j] = counter;
             j++;
         }
+        int[] subPings2 = new int[subs.Count];
+        for (int i = 0; i < subPings.Length; i++)
+        {
+            subPings2[i] = subPings[i];
+        }
         string[] sortedSubs = new string[subs.Count];
         j = 0;
+        int a = 0;
         while (sortedSubs.Contains(""))
         {
             int maxValue = subPings.Max();
             int maxIndex = subPings.ToList().IndexOf(maxValue);
             sortedSubs[j] = (string) subs[maxIndex];
+            subPings2[a] = subPings[j];
             subPings[j] = int.MinValue;
+            a++;
         }
-        return sortedSubs;
+        float extremity = 0;
+        for (int i = 0; i < sortedSubs.Length; i++)
+        {
+            if (conservativeSubs.Contains(sortedSubs[i]))
+            {
+                extremity += subPings2[i] / (i + 1);
+            }
+            if (liberalSubs.Contains(sortedSubs[i]))
+            {
+                extremity -= subPings2[i] / (i + 1);
+            }
+        }
+        return extremity;
+    }
+
+    public static string[] CommentAnalyzer(RedditComment[] comments)
+    {
+        //Use Will's class pleaze
     }
 }
