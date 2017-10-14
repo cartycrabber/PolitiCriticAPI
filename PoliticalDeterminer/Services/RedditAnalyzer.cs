@@ -1,6 +1,7 @@
 ﻿using PoliticalDeterminer.Models;
 using System;
 using System.Collections;
+using System.Linq;
 
 public static class RedditAnalyzer
 {
@@ -17,6 +18,10 @@ public static class RedditAnalyzer
         ArrayList numHitsPerSub = new ArrayList();
         int[] subPings = new int[subs.Count];
         int j = 0;
+        for (int i = 0; i < subs.Count; i++)
+        {
+            numHitsPerSub.Add(comments[i].Subreddit);
+        }
         while (numHitsPerSub.Count > 0)
         {
             string sub = (string) numHitsPerSub[0];
@@ -30,10 +35,14 @@ public static class RedditAnalyzer
             j++;
         }
         string[] sortedSubs = new string[subs.Count];
-        for (int i = 0; i < sortedSubs.Length; i++)
+        j = 0;
+        while (sortedSubs.Contains(""))
         {
-
+            int maxValue = subPings.Max();
+            int maxIndex = subPings.ToList().IndexOf(maxValue);
+            sortedSubs[j] = (string) subs[maxIndex];
+            subPings[j] = int.MinValue;
         }
-        return new string[3];
+        return sortedSubs;
     }
 }
