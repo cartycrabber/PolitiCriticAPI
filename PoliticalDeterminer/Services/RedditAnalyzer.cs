@@ -33,26 +33,26 @@ public static class RedditAnalyzer
         }
         ArrayList subPopularityInOrder = new ArrayList();
         ArrayList subScoreInOrder = new ArrayList();
-        for (int i = 0; i < subs.length; i++)
+        for (int i = 0; i < subs.Count; i++)
         {
             subScoreInOrder[i] = int.MinValue;
         }
         //First need list of subs in order of score, then need scores themselves
-        while (totalScorePerSub.Count < deltaSubs.Count)
+        while (subScoreInOrder.Count < deltaSubs.Count)
         {
-            string currentSub = subs2[0];
+            string currentSub = (string) subs2[0];
             int score = 0;
             for (int i = 0; i < subs.Count; i++)
             {
                 if (subs[i].Equals(currentSub))
                 {
-                    score += (int) [i + 1];
+                    score += (int) subs[i + 1];
                     subs2.Remove(i);
                     subs2.Remove(i);
                 }
             }
             int index = 0;
-            while (subScoreInOrder[index] > score)
+            while ((int) subScoreInOrder[index] > score)
             {
                 index++;
             }
@@ -60,15 +60,15 @@ public static class RedditAnalyzer
             subPopularityInOrder.Insert(index, currentSub);
         }
         int extremity = 0;
-        for (int i = 0; i < subScoreInOrder.Count; i++)
+        for (int i = 0; i < (int) subScoreInOrder.Count; i++)
         {
             if (conservativeSubs.Contains(subPopularityInOrder[i]))
             {
-                extremity += subScoreInOrder[i];
+                extremity += (int) subScoreInOrder[i];
             }
             if (liberalSubs.Contains(subPopularityInOrder[i]))
             {
-                extremity -= subScoreInOrder[i];
+                extremity -= (int) subScoreInOrder[i];
             }
         }
         return extremity;
@@ -108,7 +108,7 @@ public static class RedditAnalyzer
             subPings[j] = counter;
             j++;
         }
-        int[] subPings2 = new int[subs.Count];
+        ArrayList subPings2 = new ArrayList();
         for (int i = 0; i < subPings.Length; i++)
         {
             subPings2[i] = subPings[i];
@@ -133,21 +133,21 @@ public static class RedditAnalyzer
         for (int i = 0; i < sortedSubs.Length; i++) //MIGHT HAVE TO CHANGE "i < sortedSubs.Length" TO "subPings2.Count > 0"
         {
             //If multiple subreddits have the same number of pings, they affect the extremity value the same amount
-            if (prevNumber == subPings2[0])
+            if (prevNumber == (int) subPings2[0])
             {
                 delta++;
             } else
             {
                 delta = 0;
             }
-            prevNumber = subPings2[0];
+            prevNumber = (int) subPings2[0];
             if (conservativeSubs.Contains(sortedSubs[i]))
             {
-                extremity += subPings2[0] / (i + 1 - delta);
+                extremity += (int) subPings2[0] / (i + 1 - delta);
             }
             if (liberalSubs.Contains(sortedSubs[i]))
             {
-                extremity -= subPings2[0] / (i + 1 - delta);
+                extremity -= (int) subPings2[0] / (i + 1 - delta);
             }
             subPings2.Remove(0);
         }
@@ -157,5 +157,6 @@ public static class RedditAnalyzer
     public static string[] CommentAnalyzer(RedditComment[] comments)
     {
         //Use Will's class pleaze
+        return new string[3];
     }
 }
