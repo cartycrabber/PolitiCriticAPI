@@ -13,7 +13,7 @@ public static class RedditAnalyzer
 
     private static string[] commentText;
 
-    public static float SubredditKarmaAnalyzer(RedditComment[] comments)
+    public static int SubredditKarmaAnalyzer(RedditComment[] comments)
     {
         ArrayList subs = new ArrayList();
         ArrayList deltaSubs = new ArrayList();
