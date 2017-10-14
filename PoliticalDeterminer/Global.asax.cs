@@ -1,5 +1,8 @@
-﻿using System;
+﻿using PoliticalDeterminer.Models;
+using PoliticalDeterminer.Services;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -17,6 +20,9 @@ namespace PoliticalDeterminer
             GlobalConfiguration.Configure(WebApiConfig.Register);
             //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             //RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            FacebookAPI fb = new FacebookAPI();
+            FacebookPost[] posts = fb.GetPosts("DonaldTrump");
         }
     }
 }
