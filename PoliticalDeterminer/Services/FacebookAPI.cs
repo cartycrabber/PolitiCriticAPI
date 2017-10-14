@@ -23,8 +23,6 @@ namespace PoliticalDeterminer.Services
 
             Stream stream = response.GetResponseStream();
 
-            JsonSerializer serializer = new JsonSerializer();
-
             FacebookPost[] posts;
 
             using (StreamReader sr = new StreamReader(stream))

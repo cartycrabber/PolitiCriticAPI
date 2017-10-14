@@ -21,8 +21,16 @@ namespace PoliticalDeterminer
             //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             //RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            FacebookAPI fb = new FacebookAPI();
-            FacebookPost[] posts = fb.GetPosts("DonaldTrump");
+            /*FacebookAPI fb = new FacebookAPI();
+            FacebookPost[] posts = fb.GetPosts("DonaldTrump");*/
+
+            RedditAPI reddit = new RedditAPI();
+            RedditComment[] comments = reddit.GetComments("mredditer");
+
+            foreach(RedditComment comment in comments)
+            {
+                Debug.WriteLine(comment.Body);
+            }
         }
     }
 }
