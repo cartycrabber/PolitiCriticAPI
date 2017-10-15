@@ -6,6 +6,8 @@ using Accord.MachineLearning.Bayes;
 using Accord.Statistics.Distributions.Univariate;
 using Accord.Statistics.Distributions.Fitting;
 using Accord.MachineLearning;
+using Accord.Statistics.Models.Regression;
+using Accord.Statistics.Models.Regression.Fitting;
 
 namespace PoliticalDeterminer.Services
 {
@@ -19,7 +21,7 @@ namespace PoliticalDeterminer.Services
         {
             var teacher = new NaiveBayesLearning<NormalDistribution>();
 
-            string[] sampleText = System.IO.File.ReadAllLines("Data/TrainingData1.txt");
+            string[] sampleText = System.IO.File.ReadAllLines(".../PoliticalDeterminerAPI/Data/TrainingData1.txt");
 
             string[][] words = sampleText.Tokenize();
 
@@ -44,7 +46,7 @@ namespace PoliticalDeterminer.Services
 
         public float Analyze(string[] text)
         {
-            return (float)nbClassifier.Decide(new BagOfWords().Transform(text.Tokenize())).Average();
+            return (float) nbClassifier.Decide(new BagOfWords().Transform(text.Tokenize())).Average();
         }
 
         public float Analyze(string text)
