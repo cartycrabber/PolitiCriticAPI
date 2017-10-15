@@ -24,6 +24,19 @@ $(document).ready(function () {
             var input = field.val(),
                 platform = (radioVal == 'fb') ? "facebook" : "reddit",
                 site = "../leaning/" + platform + "?user=" + input;
+
+            //Validate formatting
+            if (platform == "facebook") {
+                var fbRegex = /facebook\.com\/.+/i;
+                if (!fbRegex.test(input)) 
+                    return;
+            }
+            else if (platform == "reddit") {
+                var rdRegex = /[^a-zA-Z0-9-_]+/
+                if (rdRegex.test(input))
+                    return;
+            }
+
             mainCard.children().addClass('fadeOut');
             mainCard.t = setTimeout((function() {
                 mainCard.children().remove();

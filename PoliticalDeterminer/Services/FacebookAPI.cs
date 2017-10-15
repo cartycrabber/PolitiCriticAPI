@@ -17,13 +17,16 @@ namespace PoliticalDeterminer.Services
 
         public FacebookPost[] GetPosts(string url)
         {
-            url = url.Trim();
-            url = url.TrimEnd('/');
-            url = url.Trim();
+            //First, need to take the user's page URL and find their page ID
 
-            int lastIndexOfSlash = url.LastIndexOf("/");
+            int lastIndexOfSlash = url.LastIndexOf("facebook.com/");
 
-            string pageName = url.Substring(lastIndexOfSlash + 1);
+            string pageName = url.Substring(lastIndexOfSlash + "facebook.com/".Length);
+            int endSlashIndex = pageName.IndexOf("/");
+            if(endSlashIndex > -1)
+            {
+                pageName = pageName.Substring(0, endSlashIndex);
+            }
 
             HttpWebRequest findingPageID = WebRequest.CreateHttp($"https://graph.facebook.com/{pageName}/?" +
                 $"access_token={Credentials.FacebookApiID}|{Credentials.FacebookSecret}");
@@ -43,6 +46,9 @@ namespace PoliticalDeterminer.Services
 
             string pageID = json.Substring(y + 5);//add 5 to skip the id":" and get right to the number
             pageID = pageID.Substring(0, pageID.IndexOf('"'));
+
+
+            //Now that we have the page ID we can request their posts
 
             HttpWebRequest request = WebRequest.CreateHttp($"https://graph.facebook.com/v2.10/{pageID}/posts?limit=100&" +
                 $"access_token={Credentials.FacebookApiID}|{Credentials.FacebookSecret}");
@@ -69,7 +75,17 @@ namespace PoliticalDeterminer.Services
                 posts = FacebookPage.FromJson(jsonData).Data;
             }
 
-            return posts;
+            //Go through and remove the posts that don't have text
+
+            List<FacebookPost> temp = new List<FacebookPost>();
+
+            foreach (FacebookPost p in posts)
+            {
+                if (p.Message != null && p.Message != "")
+                    temp.Add(p);
+            }
+
+            return temp.ToArray();
         }
 
         public string[] GetPostMessages(string pageID)

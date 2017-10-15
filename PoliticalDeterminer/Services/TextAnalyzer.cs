@@ -17,6 +17,8 @@ namespace PoliticalDeterminer.Services
     {
         private static TextAnalyzer INSTANCE = null;
 
+        private const float DEFAULT_RANK = 0.5f;
+
         private NaiveBayes<NormalDistribution> nbClassifier;
 
         private BagOfWords bagOfWords;
@@ -84,12 +86,14 @@ namespace PoliticalDeterminer.Services
 
         public float Analyze(string[] text)
         {
+            if (text.Length == 0)
+                return DEFAULT_RANK;
             string[][] words = text.Tokenize();
             words = TrimStopWords(words);
             double[][] transform = bagOfWords.Transform(words);
             int[] results = nbClassifier.Decide(transform);
             if (results.Length == 0)
-                return 0.5f;
+                return DEFAULT_RANK;
             return (float) results.Average();
         }
 

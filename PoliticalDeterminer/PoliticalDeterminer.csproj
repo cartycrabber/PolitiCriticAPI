@@ -286,6 +286,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="css\grid.css" />
     <Content Include="css\style.css" />
+    <Content Include="Data\conservative_training.txt" />
+    <Content Include="Data\liberal_training.txt" />
     <Content Include="Data\stop_words.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
