@@ -1,10 +1,4 @@
-﻿// To parse this JSON data, add NuGet 'Newtonsoft.Json' then do:
-//
-//    using PoliticalDeterminer.Models;
-//
-//    var data = FacebookPage.FromJson(jsonString);
-//
-namespace PoliticalDeterminer.Models
+﻿namespace PoliticalDeterminer.Models
 {
     using System;
     using System.Net;

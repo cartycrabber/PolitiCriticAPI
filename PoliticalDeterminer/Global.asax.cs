@@ -26,6 +26,7 @@ namespace PoliticalDeterminer
             //Test();
         }
 
+        //Just a function used to test the classifier
         private void Test()
         {
             TextAnalyzer analyzer = TextAnalyzer.GetInstance();
@@ -33,6 +34,7 @@ namespace PoliticalDeterminer
             Debug.WriteLine(result);
         }
 
+        //Gathers comments from a few specified facebook and reddit accounts to use as training data
         private void GatherTrainingData()
         {
             List<string> conservativeComments = new List<string>();
@@ -41,6 +43,7 @@ namespace PoliticalDeterminer
             RedditAPI rd = new RedditAPI();
             FacebookAPI fb = new FacebookAPI();
 
+            //TODO: Check if these still work with the changes to GetPosts
             conservativeComments.AddRange(fb.GetPostMessages("DonaldTrump"));
             conservativeComments.AddRange(fb.GetPostMessages("VicePresidentPence"));
             conservativeComments.AddRange(fb.GetPostMessages("100000544532899"));

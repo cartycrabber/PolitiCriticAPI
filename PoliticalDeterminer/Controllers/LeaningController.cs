@@ -1,16 +1,12 @@
 ﻿using PoliticalDeterminer.Services;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace PoliticalDeterminer.Controllers
 {
     public class LeaningController : ApiController
     {
+        //These are the entry points to the API from the web
 
         [Route("leaning/facebook")]
         public double GetFacebookLeaning([FromUri]string user)

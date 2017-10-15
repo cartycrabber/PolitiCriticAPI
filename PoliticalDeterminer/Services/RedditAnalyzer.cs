@@ -1,23 +1,26 @@
 ﻿using PoliticalDeterminer.Models;
 using PoliticalDeterminer.Services;
-using System;
 using System.Collections;
 using System.Linq;
 
 public static class RedditAnalyzer
 {
+    //Some subreddits with predefined political leanings
     private static string[] conservativeSubs = { "republican", "conservative", "the_donald", "conservatives", "monarchism", "new_right",
     "objectivism", "paleoconservative", "republicans", "romney", "trueobjectivism" };
 
     private static string[] liberalSubs = { "liberal", "alltheleft", "classical_liberals", "cornbreadliberals", "democrats", "demsocialist",
     "greenparty", "labor", "leftcommunism", "leninism", "neoprogs", "obama", "progressive", "socialdemocracy", "socialism" };
 
-    private static string[] commentText;
-
     private static TextAnalyzer textAnalyzer = TextAnalyzer.GetInstance();
 
     private static RedditAPI api = new RedditAPI();
 
+    /// <summary>
+    /// Analyzes a user's comments, subreddit karma, and subreddit activity to estimate political leaning
+    /// </summary>
+    /// <param name="username">Username of the reddit account to lookup</param>
+    /// <returns>A float representing estimated political leaning, with 0 being liberal, 1 being conservative, and 0.5 being moderate</returns>
     public static float Analyze(string username)
     {
         RedditComment[] comments = api.GetComments(username);
@@ -27,6 +30,11 @@ public static class RedditAnalyzer
         return commentAnalysis;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="comments"></param>
+    /// <returns></returns>
     public static int SubredditKarmaAnalyzer(RedditComment[] comments)
     {
         ArrayList subs = new ArrayList();
@@ -88,6 +96,11 @@ public static class RedditAnalyzer
         return extremity;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="comments"></param>
+    /// <returns></returns>
     public static float SubredditActivityAnalyzer(RedditComment[] comments)
     {
         
@@ -168,8 +181,14 @@ public static class RedditAnalyzer
         return extremity;
     }
 
+    /// <summary>
+    /// Analyzes the last 100 comments made by the given user and returns their estimated political leaning
+    /// </summary>
+    /// <param name="comments"></param>
+    /// <returns>A float representing estimated political leaning, with 0 being liberal, 1 being conservative, and 0.5 being moderate</returns>
     public static float CommentAnalyzer(RedditComment[] comments)
     {
+        //Convert the array of Reddit comments to strings
         string[] strings = new string[comments.Length];
         for(int i = 0; i < comments.Length; i++)
         {

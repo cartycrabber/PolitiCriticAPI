@@ -1,15 +1,10 @@
-﻿// To parse this JSON data, add NuGet 'Newtonsoft.Json' then do:
-//
-//    using PoliticalDeterminer.Models;
-//
-//    var data = RedditListing.FromJson(jsonString);
-//
-namespace PoliticalDeterminer.Models
+﻿namespace PoliticalDeterminer.Models
 {
     using System;
 
     using Newtonsoft.Json;
 
+    //Generalize this class so that it can later be extended to other listings, like working with subreddits
     public partial class RedditListing<T>
     {
         [JsonProperty("data")]
