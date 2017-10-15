@@ -18,12 +18,12 @@ $(document).ready(function () {
     });
 
     button.click(function() {
-        if (radioVal != null && field.text() != null) {
+        if (radioVal != null && field.text() != null && field.val() != "") {
             mainCard.height(cardHeight);
 
             var input = field.val(),
                 platform = (radioVal == 'fb') ? "facebook" : "reddit",
-                site = "http://politicaldeterminer.azurewebsites.net/leaning/" + platform + "/" + input;
+                site = "http://politicritic.azurewebsites.net/leaning/" + platform + "/" + input;
             mainCard.children().addClass('fadeOut');
             mainCard.t = setTimeout((function() {
                 mainCard.children().remove();
