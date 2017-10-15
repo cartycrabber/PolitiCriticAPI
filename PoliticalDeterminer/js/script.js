@@ -19,7 +19,7 @@ $(document).ready(function () {
 
     button.click(function() {
         if (radioVal != null && field.text() != null && field.val() != "") {
-            mainCard.height(cardHeight);
+            mainCard.css('min-height', cardHeight);
 
             var input = field.val(),
                 platform = (radioVal == 'fb') ? "facebook" : "reddit",
@@ -28,7 +28,7 @@ $(document).ready(function () {
             //Validate formatting
             if (platform == "facebook") {
                 var fbRegex = /facebook\.com\/.+/i;
-                if (!fbRegex.test(input)) 
+                if (!fbRegex.test(input))
                     return;
             }
             else if (platform == "reddit") {

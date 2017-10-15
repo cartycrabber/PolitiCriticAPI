@@ -56,8 +56,43 @@ p {
     visibility: hidden;
     opacity: 0.0;
     position: relative;
-    margin-top: 12%;
     text-align: center;
+}
+
+@media (min-height: 740px) {
+    #title {
+        margin-top: 12%;
+    }
+}
+
+@media (min-height: 600px) {
+    #title {
+        margin-top: 8%;
+    }
+}
+
+@media (min-height: 400px) {
+    #title {
+        margin-top: 5%;
+    }
+}
+
+@media (min-width: 500px) {
+    #main-card {
+        width: 70%;
+    }
+}
+
+@media (min-width: 850px) {
+    #main-card {
+        width: 55%;
+    }
+}
+
+@media (min-width: 1200px) {
+    #main-card {
+        width: 40%;
+    }
 }
 
 #main-card {
@@ -68,8 +103,7 @@ p {
 	top: 51%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-    width: 40%;
-	padding: 2em 0em;
+ 	padding: 2em 0em;
 	background: white;
 	border-radius: 1em;
 	text-align: center;
