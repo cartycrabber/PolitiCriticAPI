@@ -22,7 +22,7 @@ namespace PoliticalDeterminer
             //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             //RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            GatherTrainingData();
+            //GatherTrainingData();
             Test();
         }
 
