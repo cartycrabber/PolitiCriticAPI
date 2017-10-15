@@ -206,7 +206,6 @@
     <Compile Include="Services\FacebookAPI.cs" />
     <Compile Include="Services\RedditAnalyzer.cs" />
     <Compile Include="Services\RedditAPI.cs" />
-    <Compile Include="Services\Subreddits.cs" />
     <Compile Include="Services\TextAnalyzer.cs" />
   </ItemGroup>
   <ItemGroup>

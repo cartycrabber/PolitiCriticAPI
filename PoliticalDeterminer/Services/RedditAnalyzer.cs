@@ -16,6 +16,8 @@ public static class RedditAnalyzer
 
     private static RedditAPI api = new RedditAPI();
 
+    private const float DEFAULT_RANK = 0.5f;
+
     /// <summary>
     /// Analyzes a user's comments, subreddit karma, and subreddit activity to estimate political leaning
     /// </summary>
@@ -188,6 +190,8 @@ public static class RedditAnalyzer
     /// <returns>A float representing estimated political leaning, with 0 being liberal, 1 being conservative, and 0.5 being moderate</returns>
     public static float CommentAnalyzer(RedditComment[] comments)
     {
+        if (comments.Length == 0)
+            return DEFAULT_RANK;
         //Convert the array of Reddit comments to strings
         string[] strings = new string[comments.Length];
         for(int i = 0; i < comments.Length; i++)
