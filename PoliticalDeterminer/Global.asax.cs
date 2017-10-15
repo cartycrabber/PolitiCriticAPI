@@ -23,13 +23,13 @@ namespace PoliticalDeterminer
             //RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             //GatherTrainingData();
-            Test();
+            //Test();
         }
 
         private void Test()
         {
             TextAnalyzer analyzer = TextAnalyzer.GetInstance();
-            float result = analyzer.Analyze("On this Constitution Day, as President Donald J. Trump said, \"Let us recommit ourselves to our Founding Principles, and rededicate ourselves to our glorious heritage.We have inherited a birthright of freedom - we must defend it dearly, protect it jealously, and promote it proudly, as one nation under God.We must rise to the task of self - governance, prove worthy of the sacrifices made to carve out this magnificent nation, and we must give our loyalty to our Republic and its citizens in all that we do.\"");
+            float result = analyzer.Analyze("");
             Debug.WriteLine(result);
         }
 
@@ -46,6 +46,7 @@ namespace PoliticalDeterminer
             conservativeComments.AddRange(fb.GetPostMessages("100000544532899"));
             conservativeComments.AddRange(fb.GetPostMessages("100001387924004"));
             conservativeComments.AddRange(fb.GetPostMessages("100001351601986"));
+            conservativeComments.AddRange(fb.GetPostMessages("100007241612747"));
 
             conservativeComments.AddRange(rd.GetCommentsText("JackalSpat"));
             conservativeComments.AddRange(rd.GetCommentsText("neemarita"));

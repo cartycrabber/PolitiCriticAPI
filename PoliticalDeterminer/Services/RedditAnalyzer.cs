@@ -1,4 +1,5 @@
 ﻿using PoliticalDeterminer.Models;
+using PoliticalDeterminer.Services;
 using System;
 using System.Collections;
 using System.Linq;
@@ -12,6 +13,19 @@ public static class RedditAnalyzer
     "greenparty", "labor", "leftcommunism", "leninism", "neoprogs", "obama", "progressive", "socialdemocracy", "socialism" };
 
     private static string[] commentText;
+
+    private static TextAnalyzer textAnalyzer = TextAnalyzer.GetInstance();
+
+    private static RedditAPI api = new RedditAPI();
+
+    public static float Analyze(string username)
+    {
+        RedditComment[] comments = api.GetComments(username);
+        //int subKarma = SubredditKarmaAnalyzer(comments);
+        //float subActivity = SubredditActivityAnalyzer(comments);
+        float commentAnalysis = CommentAnalyzer(comments);
+        return commentAnalysis;
+    }
 
     public static int SubredditKarmaAnalyzer(RedditComment[] comments)
     {
@@ -154,9 +168,13 @@ public static class RedditAnalyzer
         return extremity;
     }
 
-    public static string[] CommentAnalyzer(RedditComment[] comments)
+    public static float CommentAnalyzer(RedditComment[] comments)
     {
-        //Use Will's class pleaze
-        return new string[3];
+        string[] strings = new string[comments.Length];
+        for(int i = 0; i < comments.Length; i++)
+        {
+            strings[i] = comments[i].Body;
+        }
+        return textAnalyzer.Analyze(strings);
     }
 }

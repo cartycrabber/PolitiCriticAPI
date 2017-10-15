@@ -23,21 +23,27 @@ $(document).ready(function () {
 
             var input = field.val(),
                 platform = (radioVal == 'fb') ? "facebook" : "reddit",
-                site = "http://politicritic.azurewebsites.net/leaning/" + platform + "/" + input;
+                site = "../leaning/" + platform + "/" + input;
             mainCard.children().addClass('fadeOut');
             mainCard.t = setTimeout((function() {
                 mainCard.children().remove();
             }), 500);
             //Results revealed here after the button press
             $.get(site, function(data) {
-                mainCard.t = setTimeout((function() {
-                    if (data.toFixed() == 0) {
-                        mainCard.append("<h3 style='opacity: 0.0; transition: opacity 500ms;'>" + "Neutral" + "</h3><p style='opacity: 0.0; transition: opacity 500ms;'>It's our best guess.</p><input style='opacity: 0.0; transition: opacity 500ms;' class='noselect' id='again' type='submit' name='repeat' value='Again?'>");
-                    } else if (data.toFixed() == 1){
-                        mainCard.append("<h3 style='opacity: 0.0; transition: opacity 500ms;'>" + "Positive One" + "</h3><p style='opacity: 0.0; transition: opacity 500ms;'>It's our best guess.</p><input style='opacity: 0.0; transition: opacity 500ms;' class='noselect' id='again' type='submit' name='repeat' value='Again?'>");
+                mainCard.t = setTimeout((function () {
+                    data = data * 2 - 1;
+
+                    mainCard.append("<h3 style='opacity: 0.0; transition: opacity 500ms;'>" + data.toFixed(2));
+
+                    if (data.toFixed(2) < 0.0) {
+                        mainCard.append("<h3 style='opacity: 0.0; transition: opacity 500ms;'>" + "Liberal Leaning");
+                    } else if (data.toFixed(2) > 0.0) {
+                        mainCard.append("<h3 style='opacity: 0.0; transition: opacity 500ms;'>" + "Conservative Leaning");
                     } else {
-                        mainCard.append("<h3 style='opacity: 0.0; transition: opacity 500ms;'>" + "Negative One" + "</h3><p style='opacity: 0.0; transition: opacity 500ms;'>It's our best guess.</p><input style='opacity: 0.0; transition: opacity 500ms;' class='noselect' id='again' type='submit' name='repeat' value='Again?'>");
+                        mainCard.append("<h3 style='opacity: 0.0; transition: opacity 500ms;'>" + "Perfectly Moderate");
                     }
+
+                    mainCard.append("</h3><p style='opacity: 0.0; transition: opacity 500ms;'>It's our best guess.</p><input style='opacity: 0.0; transition: opacity 500ms;' class='noselect' id='again' type='submit' name='repeat' value='Again?'>");
 
                     mainCard.children().animate({opacity: 1.0}, 500);
                 }), 500);

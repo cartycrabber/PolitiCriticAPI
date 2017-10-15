@@ -344,9 +344,6 @@
     <Content Include="bin\roslyn\vbc.exe.config" />
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
-    <Content Include="css\grid.css~" />
-    <Content Include="css\style.css~" />
-    <Content Include="js\script.js~" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\PolitiCritic - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\PolitiCritic - Web Deploy.pubxml" />

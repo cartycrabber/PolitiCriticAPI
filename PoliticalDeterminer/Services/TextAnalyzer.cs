@@ -90,9 +90,9 @@ namespace PoliticalDeterminer.Services
             return (float) nbClassifier.Decide(transform).Average();
         }
 
-        public float Analyze(string text)
+        public int Analyze(string text)
         {
-            return Analyze(new string[] { text });
+            return (int)Analyze(new string[] { text });
         }
 
         public static TextAnalyzer GetInstance()
