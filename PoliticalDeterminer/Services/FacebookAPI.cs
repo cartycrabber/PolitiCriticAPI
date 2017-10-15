@@ -4,6 +4,7 @@ using PoliticalDeterminer.Models;
 using System.Net;
 using System.Diagnostics;
 using System.IO;
+using System;
 
 namespace PoliticalDeterminer.Services
 {
@@ -25,12 +26,21 @@ namespace PoliticalDeterminer.Services
             string pageName = string.Empty;
             //Trim off everything infront of the page name, if there is any
             int lastIndexOfSlash = url.LastIndexOf("facebook.com/");
-            if(lastIndexOfSlash > -1)
+            if (lastIndexOfSlash > -1)
                 pageName = url.Substring(lastIndexOfSlash + "facebook.com/".Length);
-            //Trim off everything after the page name, if there is anything
+            //Trim off everything after the page name, if there is anything. The end is signified by either a / or ?
             int endSlashIndex = pageName.IndexOf("/");
-            if(endSlashIndex > -1)
-                pageName = pageName.Substring(0, endSlashIndex);
+            int endQmIndex = pageName.IndexOf("?");
+            int endIndex = 0;
+            if (endSlashIndex != -1 && endQmIndex != -1)
+                endIndex = Math.Min(endSlashIndex, endQmIndex);
+            else if (endSlashIndex == -1)
+                endIndex = endQmIndex;
+            else
+                endIndex = endSlashIndex;
+
+            if (endIndex > -1)
+                pageName = pageName.Substring(0, endIndex);
 
             //Create an HTTP GET Request to get the pageID corresponding to the pageName, using the page name and developer credentials
             HttpWebRequest findingPageID = WebRequest.CreateHttp($"https://graph.facebook.com/{pageName}/?" +
