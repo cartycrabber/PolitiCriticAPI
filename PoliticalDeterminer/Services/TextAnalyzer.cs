@@ -8,6 +8,8 @@ using Accord.Statistics.Distributions.Fitting;
 using Accord.MachineLearning;
 using Accord.Statistics.Models.Regression;
 using Accord.Statistics.Models.Regression.Fitting;
+using System.IO;
+using System.Diagnostics;
 
 namespace PoliticalDeterminer.Services
 {
@@ -17,36 +19,75 @@ namespace PoliticalDeterminer.Services
 
         private NaiveBayes<NormalDistribution> nbClassifier;
 
+        private BagOfWords bagOfWords;
+        private string[] stopWords;
+
         private TextAnalyzer()
         {
-            var teacher = new NaiveBayesLearning<NormalDistribution>();
-
-            string[] sampleText = System.IO.File.ReadAllLines(".../PoliticalDeterminerAPI/Data/TrainingData1.txt");
-
-            string[][] words = sampleText.Tokenize();
-
-            BagOfWords bagOfWords = new BagOfWords();
-
-            //bagOfWords.Learn(words);
-
-            int[] outputs = new int[sampleText.Length];
-
-            for (int i = 0; i < sampleText.Length; i++)
+            var teacher = new NaiveBayesLearning<NormalDistribution, NormalOptions>()
             {
-                //Index of the first space in the line (used to find the first word)
-                int spaceIndex = sampleText[i].IndexOf(" ");
-                //Set output to the number at the beginning of the line
-                outputs[i] = Convert.ToInt32(sampleText[i].Substring(0, spaceIndex));
-                //remove the number from the sample
-                sampleText[i] = sampleText[i].Substring(spaceIndex).Trim();
+                Options = {InnerOption = {Regularization = 1e-6}}
+            };
+
+            string liberalTrainingPath = System.Web.Hosting.HostingEnvironment.MapPath(@"~/Data/liberal_training.txt");
+            string conservativeTrainingPath = System.Web.Hosting.HostingEnvironment.MapPath(@"~/Data/conservative_training.txt");
+            string stopWordsPath = System.Web.Hosting.HostingEnvironment.MapPath(@"~/Data/stop_words.txt");
+
+            string[] liberalSamples = File.ReadAllLines(liberalTrainingPath);
+            string[] conservativeSamples = File.ReadAllLines(conservativeTrainingPath);
+            stopWords = File.ReadAllLines(stopWordsPath);
+
+            string[] samples = liberalSamples.Concat(conservativeSamples).ToArray();
+
+            string[][] words = samples.Tokenize();
+
+            if (words.Length == 0)
+                return;
+
+            words = TrimStopWords(words);
+
+            bagOfWords = new BagOfWords();
+
+            bagOfWords.Learn(words);
+
+            int[] outputs = new int[samples.Length];
+
+            for (int i = 0; i < samples.Length; i++)
+            {
+                if (i < liberalSamples.Length)
+                    outputs[i] = 0;
+                else
+                    outputs[i] = 1;
             }
 
-            nbClassifier = teacher.Learn(bagOfWords.Transform(words), outputs);
+            double[][] bow = bagOfWords.Transform(words);
+
+            nbClassifier = teacher.Learn(bow, outputs);
+        }
+
+        private string[][] TrimStopWords(string[][] words)
+        {
+            for (int i = 0; i < words.Length; i++)
+            {
+                List<string> goodWords = new List<string>();
+                for (int j = 0; j < words[i].Length; j++)
+                {
+                    if (!stopWords.Contains(words[i][j]))
+                    {
+                        goodWords.Add(words[i][j]);
+                    }
+                }
+                words[i] = goodWords.ToArray();
+            }
+            return words;
         }
 
         public float Analyze(string[] text)
         {
-            return (float) nbClassifier.Decide(new BagOfWords().Transform(text.Tokenize())).Average();
+            string[][] words = text.Tokenize();
+            words = TrimStopWords(words);
+            double[][] transform = bagOfWords.Transform(words);
+            return (float) nbClassifier.Decide(transform).Average();
         }
 
         public float Analyze(string text)

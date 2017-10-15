@@ -22,58 +22,19 @@ namespace PoliticalDeterminer
             //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             //RouteConfig.RegisterRoutes(RouteTable.Routes);
 
+            GatherTrainingData();
             Test();
         }
 
         private void Test()
         {
-            /*FacebookAPI fb = new FacebookAPI();
-            List<string> posts = new List<string>();
-            posts.Add("text");
-            posts.AddRange(fb.GetPostMessages("DonaldTrump"));
-            posts.AddRange(fb.GetPostMessages("hillaryclinton"));
-            posts.AddRange(fb.GetPostMessages("103209476386105"));
-            posts.AddRange(fb.GetPostMessages("FoxNews"));
-            posts.AddRange(fb.GetPostMessages("cnn"));
-            posts.AddRange(fb.GetPostMessages("bbcnews"));
-            posts.AddRange(fb.GetPostMessages("HuffPost"));
-            posts.AddRange(fb.GetPostMessages("JerrySeinfeld"));
-            posts.AddRange(fb.GetPostMessages("100001006333168"));
-            posts.AddRange(fb.GetPostMessages("249653248548055"));
-            posts.AddRange(fb.GetPostMessages("126736391195204"));
-            posts.AddRange(fb.GetPostMessages("naacp"));
-            posts.AddRange(fb.GetPostMessages("antiFaUSA"));
-            posts.AddRange(fb.GetPostMessages("400347320041300"));
-            posts.AddRange(fb.GetPostMessages("aclu"));
-            int fbCount = posts.Count;
-            Debug.WriteLine($"Collected {fbCount} Facebook Text Posts");
+            TextAnalyzer analyzer = TextAnalyzer.GetInstance();
+            float result = analyzer.Analyze("On this Constitution Day, as President Donald J. Trump said, \"Let us recommit ourselves to our Founding Principles, and rededicate ourselves to our glorious heritage.We have inherited a birthright of freedom - we must defend it dearly, protect it jealously, and promote it proudly, as one nation under God.We must rise to the task of self - governance, prove worthy of the sacrifices made to carve out this magnificent nation, and we must give our loyalty to our Republic and its citizens in all that we do.\"");
+            Debug.WriteLine(result);
+        }
 
-            RedditAPI rd = new RedditAPI();
-            posts.AddRange(rd.GetCommentsText("gallowboob"));
-            posts.AddRange(rd.GetCommentsText("the-realDonaldTrump"));
-            posts.AddRange(rd.GetCommentsText("HillaryClinton"));
-            posts.AddRange(rd.GetCommentsText("SQUEEEEEEEEEPS"));
-            posts.AddRange(rd.GetCommentsText("regularly-lies"));
-            posts.AddRange(rd.GetCommentsText("awake-at-dawn"));
-            posts.AddRange(rd.GetCommentsText("SeriousBlak"));
-            posts.AddRange(rd.GetCommentsText("hillaryisgoingdown"));
-            posts.AddRange(rd.GetCommentsText("MiceTonerAccount"));
-            posts.AddRange(rd.GetCommentsText("progress18"));
-            posts.AddRange(rd.GetCommentsText("Rehkit"));
-            posts.AddRange(rd.GetCommentsText("wenchette"));
-            posts.AddRange(rd.GetCommentsText("untildeath"));
-            posts.AddRange(rd.GetCommentsText("CareToRemember"));
-            posts.AddRange(rd.GetCommentsText("thetenmeows"));
-            Debug.WriteLine($"Collected {posts.Count - fbCount} Reddit Comments");
-
-            for(int i = 0; i < posts.Count; i++)
-            {
-                posts[i] = ($"\"{posts[i].Replace("\"", "\"\"")}\"");
-            }
-
-            File.WriteAllLines(@"C:\Development\HackGT4\SamplePosts.csv", posts);
-            */
-
+        private void GatherTrainingData()
+        {
             List<string> conservativeComments = new List<string>();
             List<string> liberalComments = new List<string>();
 
@@ -104,6 +65,12 @@ namespace PoliticalDeterminer
             liberalComments.AddRange(rd.GetCommentsText("bustopher-jones"));
             liberalComments.AddRange(rd.GetCommentsText("TheSelfGoverned"));
             liberalComments.AddRange(rd.GetCommentsText("Splatypus"));
+
+            string liberalPath = System.Web.Hosting.HostingEnvironment.MapPath(@"~/Data/liberal_training.txt");
+            string conservativePath = System.Web.Hosting.HostingEnvironment.MapPath(@"~/Data/conservative_training.txt");
+
+            File.WriteAllLines(liberalPath, liberalComments.ToArray());
+            File.WriteAllLines(conservativePath, conservativeComments.ToArray());
         }
     }
 }
