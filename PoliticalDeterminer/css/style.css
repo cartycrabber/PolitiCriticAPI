@@ -40,14 +40,6 @@ p {
     font-style: italic;
 }
 
-.red {
-    background: -webkit-linear-gradient(top left, #E57373, #D32F2F);
-}
-
-.blue {
-    background: -webkit-linear-gradient(top left, #000000, #000fff);
-}
-
 .fadeOut {
     opacity: 0.0;
     transition: all 500ms;

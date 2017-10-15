@@ -59,6 +59,10 @@ $(document).ready(function () {
                     mainCard.children().animate({opacity: 1.0}, 500);
                 }), 500);
             });
+
+            mainCard.t = setTimeout((function() {
+                mainCard.css('min-height', '');
+            }), 1000);
         }
     });
 
