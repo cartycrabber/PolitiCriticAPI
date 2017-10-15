@@ -8,3 +8,5 @@ Backend API has two publically available endpoints:
 http://politicritic.azurewebsites.net/leaning/facebook?user={Facebook_page_URL}
 
 http://politicritic.azurewebsites.net/leaning/reddit?user={Reddit_username}
+
+Site and API are hosted on a Microsoft Azure Web App
