@@ -23,7 +23,7 @@ $(document).ready(function () {
 
             var input = field.val(),
                 platform = (radioVal == 'fb') ? "facebook" : "reddit",
-                site = "../leaning/" + platform + "?user=" + input;
+                site = "http://politicritic.azurewebsites.net/leaning/" + platform + "?user=" + input;
 
             //Validate formatting
             if (platform == "facebook") {
