@@ -23,7 +23,7 @@ $(document).ready(function () {
 
             var input = field.val(),
                 platform = (radioVal == 'fb') ? "facebook" : "reddit",
-                site = "../leaning/" + platform + "/" + input;
+                site = "../leaning/" + platform + "?user=" + input;
             mainCard.children().addClass('fadeOut');
             mainCard.t = setTimeout((function() {
                 mainCard.children().remove();

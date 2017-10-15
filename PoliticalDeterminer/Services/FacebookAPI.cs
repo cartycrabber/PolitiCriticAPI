@@ -15,13 +15,17 @@ namespace PoliticalDeterminer.Services
     {
         const int MIN_POST_SIZE = 5;
 
-        public FacebookPost[] GetPosts(string pageID)
+        public FacebookPost[] GetPosts(string url)
         {
-            /*int lastIndexOfSlash = url.LastIndexOf("/");
+            url = url.Trim();
+            url = url.TrimEnd('/');
+            url = url.Trim();
 
-            string pageName = url.Substring(lastIndexOfSlash, url.Length);
+            int lastIndexOfSlash = url.LastIndexOf("/");
 
-            HttpWebRequest findingPageID = WebRequest.CreateHttp($"https://graph.facebook.com/{pageName}" +
+            string pageName = url.Substring(lastIndexOfSlash + 1);
+
+            HttpWebRequest findingPageID = WebRequest.CreateHttp($"https://graph.facebook.com/{pageName}/?" +
                 $"access_token={Credentials.FacebookApiID}|{Credentials.FacebookSecret}");
 
             WebResponse pageIDResponse = findingPageID.GetResponse();
@@ -37,10 +41,8 @@ namespace PoliticalDeterminer.Services
 
             int y = json.IndexOf("id");
 
-            FacebookPost[] fbID = FacebookPage.FromJson(json).Data;
-
-            string pageID = fbID[0].Id;
-            */
+            string pageID = json.Substring(y + 5);//add 5 to skip the id":" and get right to the number
+            pageID = pageID.Substring(0, pageID.IndexOf('"'));
 
             HttpWebRequest request = WebRequest.CreateHttp($"https://graph.facebook.com/v2.10/{pageID}/posts?limit=100&" +
                 $"access_token={Credentials.FacebookApiID}|{Credentials.FacebookSecret}");

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PoliticalDeterminer.Services;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -11,18 +12,18 @@ namespace PoliticalDeterminer.Controllers
     public class LeaningController : ApiController
     {
 
-        [Route("leaning/facebook/{id}")]
-        public double GetFacebookLeaning(string id)
+        [Route("leaning/facebook")]
+        public double GetFacebookLeaning([FromUri]string user)
         {
             Debug.WriteLine("Entering Facebook Endpoint");
-            return new Random().NextDouble() * 2.0 - 1.0;
+            return FacebookAnalyzer.Analyze(user);
         }
 
-        [Route("leaning/reddit/{id}")]
-        public double GetRedditLeaning(string id)
+        [Route("leaning/reddit")]
+        public double GetRedditLeaning([FromUri]string user)
         {
             Debug.WriteLine("Entering Reddit Endpoint");
-            return RedditAnalyzer.Analyze(id);
+            return RedditAnalyzer.Analyze(user);
         }
     }
 }

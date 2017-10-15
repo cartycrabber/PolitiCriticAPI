@@ -87,7 +87,10 @@ namespace PoliticalDeterminer.Services
             string[][] words = text.Tokenize();
             words = TrimStopWords(words);
             double[][] transform = bagOfWords.Transform(words);
-            return (float) nbClassifier.Decide(transform).Average();
+            int[] results = nbClassifier.Decide(transform);
+            if (results.Length == 0)
+                return 0.5f;
+            return (float) results.Average();
         }
 
         public int Analyze(string text)
