@@ -1,5 +1,10 @@
 $(document).ready(function () {
 
+    var h = $(window).height();
+    if (h < 650) {
+        $('#quote').css('visibility', 'hidden');
+    }
+
     var facebook = $("#facebook"),
         reddit = $("#reddit"),
         field = $('input[type="text"]'),
