@@ -10,15 +10,15 @@ namespace PoliticalDeterminer.Controllers
     public class LeaningController : ApiController
     {
         [Route("leaning/facebook/{id}")]
-        public int GetFacebookLeaning(string id)
+        public double GetFacebookLeaning(string id)
         {
-            return 0;
+            return new Random().NextDouble() * 2.0 - 1.0;
         }
 
         [Route("leaning/reddit/{id}")]
-        public int GetRedditLeaning(string id)
+        public double GetRedditLeaning(string id)
         {
-            return 0;
+            return new Random().NextDouble() * 2.0 - 1.0;
         }
     }
 }

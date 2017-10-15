@@ -10,9 +10,11 @@ namespace PoliticalDeterminer.Services
 {
     public class RedditAPI
     {
+        const int MIN_COMMENT_SIZE = 5;
+
         public RedditComment[] GetComments(string user)
         {
-            HttpWebRequest request = WebRequest.CreateHttp($"https://www.reddit.com/user/{user}/comments/.json");
+            HttpWebRequest request = WebRequest.CreateHttp($"https://www.reddit.com/user/{user}/comments/.json?limit=100");
             request.Method = "GET";
 
             WebResponse response = request.GetResponse();
@@ -33,6 +35,23 @@ namespace PoliticalDeterminer.Services
             }
 
             return comments;
+        }
+
+        public string[] GetCommentsText(string user)
+        {
+            RedditComment[] comments = GetComments(user);
+            List<string> text = new List<string>();
+
+            for(int i = 0; i < comments.Length; i++)
+            {
+                if (comments[i].Body != null)
+                {
+                    if(comments[i].Body.Split(' ').Count() >= MIN_COMMENT_SIZE)
+                        text.Add(comments[i].Body.Replace("\n", " "));
+                }
+            }
+
+            return text.ToArray();
         }
     }
 }

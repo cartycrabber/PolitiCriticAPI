@@ -1,10 +1,42 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
-    <img src="HackGTFall2014.svg"/>
-</body>
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>PolitiCritic</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/script.js"></script>
+
+	<link href="css/style.css" rel="stylesheet" type="text/css">
+	<link href="css/grid.css" rel="stylesheet" type="text/css">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+  </head>
+  <body>
+    <div id="glare"></div>
+    <div class="container">
+      <div class="col-9" id="title">
+        <h1>PolitiCritic</h1>
+        <p>Quote</p>
+      </div>
+      <div class="container">
+        <div class="shadow" id="main-card">
+	      <input type="text" name="username" placeholder="Choose a platform below">
+          <div id="lower">
+            <div class="socialBtnGroup">
+              <div class="socialBtn noselect" id="facebook" data-value="fb" hint="Profile URL"><img src="res/facebook.png"></div>
+              <div class="socialBtn noselect" id="reddit" data-value="rd" hint="Username"><img src="res/reddit.png"></div>
+            </div>
+            <input class="noselect" type="submit" name="submit" value="Determine">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="footer">
+      <p id="footer-text">Will Carty - David Saiontz - Nick Chaloult | HackGT 4</p>
+    </div>
+  </body>
+
 </html>
