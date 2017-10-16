@@ -51,7 +51,7 @@ $(document).ready(function () {
                 mainCard.t = setTimeout((function () {
                     data = data * 2 - 1;
 
-                    mainCard.append("<h3 style='opacity: 0.0; transition: opacity 500ms;'>" + data);
+                    mainCard.append("<h3 style='opacity: 0.0; transition: opacity 500ms;'>" + data.toFixed(2));
 
                     if (data.toFixed(2) < 0.0) {
                         mainCard.append("<h3 style='opacity: 0.0; transition: opacity 500ms;'>" + "Liberal Leaning");
